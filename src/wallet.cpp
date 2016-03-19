@@ -1047,6 +1047,7 @@ int64_t CWallet::GetBalance() const
             const CWalletTx* pcoin = &(*it).second;
             if (pcoin->IsTrusted())
                 nTotal += pcoin->GetAvailableCredit();
+                if(nTotal<0)return MAX_MONEY;
         }
     }
     if(nTotal<0)return MAX_MONEY;
@@ -1077,6 +1078,7 @@ int64_t CWallet::GetUnconfirmedBalance() const
             const CWalletTx* pcoin = &(*it).second;
             if (!IsFinalTx(*pcoin) || (!pcoin->IsTrusted() && pcoin->GetDepthInMainChain() == 0))
                 nTotal += pcoin->GetAvailableCredit();
+                if(nTotal<0)return MAX_MONEY;
         }
     }
     if(nTotal<0)return MAX_MONEY;
@@ -1093,6 +1095,7 @@ int64_t CWallet::GetImmatureBalance() const
             const CWalletTx& pcoin = (*it).second;
             if (pcoin.IsCoinBase() && pcoin.GetBlocksToMaturity() > 0 && pcoin.IsInMainChain())
                 nTotal += GetCredit(pcoin);
+                if(nTotal<0)return MAX_MONEY;
         }
     }
     if(nTotal<0)return MAX_MONEY;
@@ -1227,6 +1230,7 @@ int64_t CWallet::GetStake() const
         const CWalletTx* pcoin = &(*it).second;
         if (pcoin->IsCoinStake() && pcoin->GetBlocksToMaturity() > 0 && pcoin->GetDepthInMainChain() > 0)
             nTotal += CWallet::GetCredit(*pcoin);
+            if(nTotal<0)return MAX_MONEY;
     }
     if(nTotal<0)return MAX_MONEY;
     return nTotal;
@@ -1255,6 +1259,7 @@ int64_t CWallet::GetNewMint() const
         const CWalletTx* pcoin = &(*it).second;
         if (pcoin->IsCoinBase() && pcoin->GetBlocksToMaturity() > 0 && pcoin->GetDepthInMainChain() > 0)
             nTotal += CWallet::GetCredit(*pcoin);
+            if(nTotal<0)return MAX_MONEY;
     }
     if(nTotal<0)return MAX_MONEY;
     return nTotal;

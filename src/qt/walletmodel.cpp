@@ -47,7 +47,7 @@ qint64 WalletModel::getBalance(const CCoinControl *coinControl) const
         wallet->AvailableCoins(vCoins, true, coinControl);
         BOOST_FOREACH(const COutput& out, vCoins)
             nBalance += out.tx->vout[out.i].nValue;
-        if(nBalance<0)return MAX_MONEY;
+            if(nBalance<0)return MAX_MONEY;
         return nBalance;
     }
 

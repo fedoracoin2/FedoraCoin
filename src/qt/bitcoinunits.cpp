@@ -67,9 +67,9 @@ int BitcoinUnits::amountDigits(int unit)
 {
     switch(unit)
     {
-    case BTC: return 8; // 21,000,000 (# digits, without commas)
-    case mBTC: return 11; // 21,000,000,000
-    case uBTC: return 14; // 21,000,000,000,000
+    case BTC: return 11; // 21,000,000 (# digits, without commas)
+    case mBTC: return 14; // 21,000,000,000
+    case uBTC: return 17; // 21,000,000,000,000
     default: return 0;
     }
 }
@@ -142,7 +142,7 @@ bool BitcoinUnits::parse(int unit, const QString &value, qint64 *val_out)
     bool ok = false;
     QString str = whole + decimals.leftJustified(num_decimals, '0');
 
-    if(str.size() > 18)
+    if(str.size() > 19)
     {
         return false; // Longer numbers will exceed 63 bits
     }
